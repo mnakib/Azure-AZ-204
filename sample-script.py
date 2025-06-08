@@ -1,13 +1,18 @@
-import os
+from flask import Flask,redirect,url_for
 
-# Specify the environment variable name
-env_var_name = "MY_ENV_VAR"
+app = Flask(__name__)
 
-# Retrieve the environment variable
-env_value = os.getenv(env_var_name)
+@app.route("/")
+def home():
+    return "<h1>Hello! This is my first Flask web page</h1>"
 
-# Output the value
-if env_value:
-    print(f"The value of {env_var_name} is: {env_value}")
-else:
-    print(f"{env_var_name} is not set in the environment.")
+@app.route("/<name>")
+def user(name):
+    return f"Hello {name}!"
+
+@app.route("/admin")
+def admin():
+    return redirect(url_for("home"))
+
+if __name__ == "__main__":
+    app.run()
